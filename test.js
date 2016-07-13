@@ -1,16 +1,30 @@
+var choices = {
+  rock: {
+    rock: 'nothing',
+    paper: 'winner',
+    scissors: 'loser'
+  },
+  paper: {
+    rock: 'loser',
+    paper: 'nothing',
+    scissors: 'winner'
+  },
+  scissors: {
+    rock: 'winner',
+    paper: 'loser',
+    scissors: 'nothing'
+  }
+}
 /**
  * choses a random hand for the computer
  * @param  {number} rand_num  random number passed to the function to chose a hand
  * @return {object}           random hand
  */
 
-function FindComputerHand(rand_num){
-  var choices = [
-    {winner : 'rock' , loser : 'scissors'},
-    {winner : 'scissors' , loser : 'paper'},
-    {winner : 'paper' , loser : 'rock'}
-  ]
-  return choices[rand_num]
+function FindComputerHand(choices, rand_num){
+  // Object.keys returns the keys of a given object. Here it would return
+  // rock, paper, scissors
+  return Object.keys(choices)[rand_num]
 }
 
 /**
@@ -20,18 +34,17 @@ function FindComputerHand(rand_num){
  */
 
 var WinLose = function(user_hand){
-  var computer_hand = FindComputerHand(Math.round((Math.random() * 10 ) % 2))
-  if (user_hand != computer_hand.winner){
-    if (user_hand === computer_hand.loser){
-      return computer_hand.winner + " vs " + user_hand + "*** you lost ***"
-    }
-    else {
-      return computer_hand.winner + " vs " + user_hand + "*** you won ***"
-    }
-  }
-  else{
-    return computer_hand.winner + " vs " + user_hand + "*** 404 winner not found ***"
-  }
+  var computer_hand = FindComputerHand(choices, Math.round((Math.random() * 10 ) % 2))
+  
+  return computer_hand + ' vs ' + user_hand + '*** ' + choices[computer_hand][user_hand] + ' ***'
+  // choices[computer_hand] would be somthing like choices['rock'] and would 
+  // return an object like this:
+  // {
+  //   rock: 'nothing',
+  //   paper: 'winner',
+  //   scissors: 'loser'
+  // }
+  // then choices[computer_hand][user_hand] would determine what is the condition
 }
 
 //calling the function
